@@ -6,11 +6,14 @@ jobs:
     runs-on: ubuntu-latest  # 云端Ubuntu系统
     steps:
       - uses: actions/checkout@v4  # 1. 拉取代码
-      - uses: actions/setup-python@v5  # 2. 安装Python
+            - uses: actions/setup-python@v5
         with:
           python-version: "3.10"
-      - run: pip install 'flet[all]'  # 3. 安装Flet
-      - run: flet build apk --module-name 123 --no-input
+      - run: pip install 'flet[all]'
+      - name: Build APK
+        env:
+          FLET_NO_PROMPT: "true"
+        run: flet build apk --module-name 123
       - uses: actions/upload-artifact@v4  # 5. 上传安装包
         with:
           name: APK安装包
