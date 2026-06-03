@@ -1,28 +1,29 @@
 name: Build APK
 on:
-  workflow_dispatch:  # 手动触发构建，可按需添加push/pull_request等自动触发条件
+  workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # 使用最新Ubuntu系统
-    
+    runs-on: ubuntu-latest
     steps:
       - name: 检出代码
-        uses: actions/checkout@v4  # 拉取代码仓库内容
-      
+        uses: actions/checkout@v4
+
       - name: 设置Python环境
         uses: actions/setup-python@v5
         with:
-          python-version: "3.10"  # 指定Python版本，与本地开发环境一致
-      
-      - name: 升级安装Flet（含所有依赖）
-        run: pip install --upgrade 'flet[all]'  # 安装最新版Flet，避免交互问题
-      
+          python-version: "3.10"
+
+      - name: 升级安装Flet
+        run: pip install --upgrade 'flet[all]'
+
       - name: 构建APK安装包
-        run: flet build apk --module-name 123  # 新版Flet原生静默安装Flutter，无需yes或env
-      
+        run: |
+          #!/bin/bash
+          yes | flet build apk --module-name 123
+
       - name: 上传APK产物
         uses: actions/upload-artifact@v4
         with:
-          name: APK安装包  # 产物名称，在Actions页面可见
-          path: build/android/*.apk  # APK输出路径，固定格式
+          name: APK安装包
+          path: build/android/*.apk
