@@ -14,13 +14,15 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: 生成依赖文件
-        run: echo "requests" > requirements.txt
+      - name: 生成依赖清单（flet+requests）
+        run: |
+          echo "flet" > requirements.txt
+          echo "requests" >> requirements.txt
 
       - name: 安装全部依赖
-        run: pip install --upgrade 'flet[all]' -r requirements.txt
+        run: pip install --upgrade -r requirements.txt
 
-      - name: 构建APK安装包
+      - name: 构建APK
         run: |
           #!/bin/bash
           yes | flet build apk --module-name 123
