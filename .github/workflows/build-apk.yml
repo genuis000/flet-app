@@ -25,7 +25,7 @@ jobs:
       - name: 构建APK
         run: |
           #!/bin/bash
-          yes | flet build apk --module-name 123
+          yes | flet build apk --module-name 青少年
 
       - name: 上传APK产物
         uses: actions/upload-artifact@v4
