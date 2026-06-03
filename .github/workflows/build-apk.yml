@@ -14,13 +14,16 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: 安装依赖
-        run: pip install --upgrade 'flet[all]' requests
+      - name: 生成依赖文件
+        run: echo "requests" > requirements.txt
 
-      - name: 构建APK（添加requests打包参数）
+      - name: 安装全部依赖
+        run: pip install --upgrade 'flet[all]' -r requirements.txt
+
+      - name: 构建APK安装包
         run: |
           #!/bin/bash
-          yes | flet build apk --module-name 123 --add-package requests
+          yes | flet build apk --module-name 123
 
       - name: 上传APK产物
         uses: actions/upload-artifact@v4
