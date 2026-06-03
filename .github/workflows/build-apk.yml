@@ -10,7 +10,7 @@ jobs:
         with:
           python-version: "3.10"
       - run: pip install 'flet[all]'  # 3. 安装Flet
-      - run: flet build apk --release --module-name 123  # 4. 打包APK
+      - run: flet build apk --module-name 123
       - uses: actions/upload-artifact@v4  # 5. 上传安装包
         with:
           name: APK安装包
