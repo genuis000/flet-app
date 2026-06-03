@@ -1,0 +1,17 @@
+name: Build APK
+on:
+  workflow_dispatch:  # 手动触发打包
+jobs:
+  build:
+    runs-on: ubuntu-latest  # 云端Ubuntu系统
+    steps:
+      - uses: actions/checkout@v4  # 1. 拉取代码
+      - uses: actions/setup-python@v5  # 2. 安装Python
+        with:
+          python-version: "3.10"
+      - run: pip install 'flet[all]'  # 3. 安装Flet
+      - run: flet build apk --release --module-name 123  # 4. 打包APK
+      - uses: actions/upload-artifact@v4  # 5. 上传安装包
+        with:
+          name: APK安装包
+          path: build/android/*.apk
